@@ -232,6 +232,9 @@ export const TRANSLATIONS = {
     quintal: "quintal",
     suggestions: "Top Suggestions",
     topSuggestions: "3 Best Suggestions (Price + Distance)",
+    source: "Source",
+    accuracy: "Accuracy",
+    lastUpdated: "Last Updated",
   },
   hi: {
     heroTitle: "40% कमाई बचाओ! सही समय, सही मंडी",
@@ -268,6 +271,9 @@ export const TRANSLATIONS = {
     quintal: "क्विंटल",
     suggestions: "शीर्ष सुझाव",
     topSuggestions: "3 सर्वश्रेष्ठ सुझाव (कीमत + दूरी)",
+    source: "स्रोत",
+    accuracy: "सटीकता",
+    lastUpdated: "अंतिम अपडेट",
   },
   mr: {
     heroTitle: "४०% कमाई वाचवा! योग्य वेळ, योग्य मंडी",
@@ -304,5 +310,8 @@ export const TRANSLATIONS = {
     quintal: "क्विंटल",
     suggestions: "प्रमुख शिफारसी",
     topSuggestions: "३ सर्वोत्तम शिफारसी (किंमत + अंतर)",
+    source: "स्रोत",
+    accuracy: "अचूकता",
+    lastUpdated: "शेवटचे अपडेट",
   }
 };

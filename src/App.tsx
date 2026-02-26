@@ -31,13 +31,15 @@ export default function App() {
   const [marketWatch, setMarketWatch] = useState<any[]>([]);
   const [districtInfo, setDistrictInfo] = useState<{ villages: string[], famousCrops: string[] }>({ villages: [], famousCrops: [] });
   const [mandiSort, setMandiSort] = useState<'nearest' | 'price'>('price');
+  const [selectedWeatherDay, setSelectedWeatherDay] = useState<number>(0);
 
   const t = TRANSLATIONS[lang];
 
   useEffect(() => {
     if (location.state && location.district) {
       const fetchDistrictData = async () => {
-        const info = await getDistrictInfo(location.state, location.district, lang);
+        const cropNames = CROPS.map(c => c.name[lang]);
+        const info = await getDistrictInfo(location.state, location.district, lang, cropNames);
         setDistrictInfo(info);
       };
       fetchDistrictData();
@@ -302,9 +304,18 @@ export default function App() {
 
               {/* Top Suggestions Section */}
               <section className="bg-emerald-900 rounded-3xl p-6 shadow-xl text-white space-y-4">
-                <h3 className="text-xl font-black flex items-center gap-2">
-                  <CheckCircle2 className="text-emerald-400" size={24} /> {t.topSuggestions}
-                </h3>
+                <div className="flex items-center justify-between">
+                  <h3 className="text-xl font-black flex items-center gap-2">
+                    <CheckCircle2 className="text-emerald-400" size={24} /> {t.topSuggestions}
+                  </h3>
+                  {insights.priceAccuracy && (
+                    <div className="text-[10px] bg-white/10 px-2 py-1 rounded-lg border border-white/20 flex flex-col items-end">
+                      <span className="opacity-60 uppercase">{t.accuracy}: {insights.priceAccuracy.confidence}%</span>
+                      <span className="font-bold">{t.source}: {insights.priceAccuracy.source}</span>
+                      <span className="text-[8px] opacity-40">{t.lastUpdated}: {insights.priceAccuracy.lastUpdated}</span>
+                    </div>
+                  )}
+                </div>
                 <div className="grid grid-cols-1 gap-3">
                   {[...insights.marketRecommendations]
                     .sort((a, b) => {
@@ -364,21 +375,27 @@ export default function App() {
                 </h3>
                 <div className="grid grid-cols-5 gap-2">
                   {insights.weatherForecast.map((w: any, idx: number) => (
-                    <div key={idx} className="flex flex-col items-center p-2 bg-stone-50 rounded-xl border border-stone-100 text-center">
-                      <span className="text-xs font-bold text-stone-400 uppercase">{w.day}</span>
+                    <button 
+                      key={idx} 
+                      onClick={() => setSelectedWeatherDay(idx)}
+                      className={`flex flex-col items-center p-2 rounded-xl border transition-all ${selectedWeatherDay === idx ? 'bg-blue-600 text-white border-blue-700 shadow-md scale-105' : 'bg-stone-50 text-stone-700 border-stone-100 hover:bg-stone-100'}`}
+                    >
+                      <span className={`text-[10px] font-bold uppercase ${selectedWeatherDay === idx ? 'text-blue-100' : 'text-stone-400'}`}>{w.day}</span>
                       <div className="my-1">
-                        {w.condition.toLowerCase().includes('rain') ? <CloudRain size={20} className="text-blue-400" /> : 
-                         w.condition.toLowerCase().includes('cloud') ? <CloudSun size={20} className="text-stone-400" /> : 
-                         <Sun size={20} className="text-orange-400" />}
+                        {w.condition.toLowerCase().includes('rain') ? <CloudRain size={20} className={selectedWeatherDay === idx ? 'text-white' : 'text-blue-400'} /> : 
+                         w.condition.toLowerCase().includes('cloud') ? <CloudSun size={20} className={selectedWeatherDay === idx ? 'text-white' : 'text-stone-400'} /> : 
+                         <Sun size={20} className={selectedWeatherDay === idx ? 'text-white' : 'text-orange-400'} />}
                       </div>
-                      <span className="text-sm font-black text-stone-700">{w.temp}°</span>
-                    </div>
+                      <span className="text-sm font-black">{w.temp}°</span>
+                    </button>
                   ))}
                 </div>
-                <div className="bg-blue-50 rounded-2xl p-4 border border-blue-100">
+                <div className="bg-blue-50 rounded-2xl p-4 border border-blue-100 min-h-[80px]">
                   <div className="flex items-start gap-2 text-blue-800 text-sm font-medium">
                     <Info size={16} className="mt-0.5 flex-shrink-0" />
-                    <p><span className="font-bold">{t.advice}:</span> {insights.weatherForecast[0].advice}</p>
+                    <p>
+                      <span className="font-bold">{insights.weatherForecast[selectedWeatherDay].day} {t.advice}:</span> {insights.weatherForecast[selectedWeatherDay].advice}
+                    </p>
                   </div>
                 </div>
               </section>

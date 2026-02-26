@@ -3,12 +3,15 @@ import { Language, LocationData, MandiPrice, HarvestPrediction } from "../types"
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "" });
 
-export async function getDistrictInfo(state: string, district: string, language: Language) {
+export async function getDistrictInfo(state: string, district: string, language: Language, availableCrops: string[]) {
   const prompt = `
     Act as an Indian agricultural expert. 
     For the district "${district}" in the state "${state}", provide:
     1. A list of 5-10 major villages or agricultural hubs in this district.
     2. A list of 5-8 famous or most grown crops in this district, categorized by season if possible.
+    
+    STRICT RULE: Only suggest crops from this list: ${availableCrops.join(", ")}.
+    If a famous crop in this district is not in the list, do not include it.
     
     Consider the following seasonal classifications for India:
     - Kharif (June–October): Rice, Maize, Cotton, Soybean, Sugarcane, Millets, Tur.
@@ -75,11 +78,15 @@ export async function getFarmInsights(
     4. trendData: Array of 7 numbers (last 7 days price trend)
     5. weatherForecast: Array of 5 objects { day: string, temp: number, condition: string, advice: string }
     6. marketWatch: Array of 4 objects { name: string, price: number, trend: string, mandi: string }
+    7. priceAccuracy: { source: string, confidence: number (0-100), lastUpdated: string }
 
     CRITICAL: Use the data from https://agmarknet.ceda.ashoka.edu.in/ and Google Search to find the LATEST LIVE market prices (Mandi Bhav) for February 2026 in India. 
     Ensure prices are highly accurate and reflect current market conditions.
+    The "priceAccuracy" field must state the source (e.g., "Agmarknet Live", "Google Search") and your confidence in the data.
     The reason should mention specific weather events and market news found via search.
     The weatherForecast should be specific to ${location.district}, ${location.state}.
+    For each day in weatherForecast, provide highly actionable and specific agricultural advice for the crop "${crop}". 
+    The advice should include specific tasks like irrigation timing, pesticide application (or avoidance), harvesting readiness, or protection from frost/heat based on the day's weather and the specific needs of "${crop}".
     The marketWatch should include major crops and their specific active mandis.
   `;
 
@@ -146,8 +153,17 @@ export async function getFarmInsights(
                 required: ["name", "price", "trend", "mandi"],
               },
             },
+            priceAccuracy: {
+              type: Type.OBJECT,
+              properties: {
+                source: { type: Type.STRING },
+                confidence: { type: Type.NUMBER },
+                lastUpdated: { type: Type.STRING },
+              },
+              required: ["source", "confidence", "lastUpdated"],
+            },
           },
-          required: ["harvestPrediction", "marketRecommendations", "storageRisk", "trendData", "weatherForecast", "marketWatch"],
+          required: ["harvestPrediction", "marketRecommendations", "storageRisk", "trendData", "weatherForecast", "marketWatch", "priceAccuracy"],
         },
       },
     });
@@ -184,6 +200,11 @@ export async function getFarmInsights(
         { name: "Potato", price: 1540, trend: "+5.1%", mandi: "Agra" },
         { name: "Cotton", price: 2100, trend: "+0.8%", mandi: "Rajkot" },
       ],
+      priceAccuracy: {
+        source: "Agmarknet Live (Mock)",
+        confidence: 95,
+        lastUpdated: new Date().toLocaleDateString(),
+      },
     };
   }
 }
