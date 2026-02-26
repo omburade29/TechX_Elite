@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KisanMitra – Farm-to-Market Intelligence</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi&family=Sora:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Our CSS files -->
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/results.css" />
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════
+       HEADER
+  ══════════════════════════════════════ -->
+  <header>
+    <div class="header-inner">
+      <div class="logo-icon">🌾</div>
+      <div>
+        <h1>KisanMitra</h1>
+        <p>Farm-to-Market Intelligence &middot; फसल से मंडी तक</p>
+      </div>
+    </div>
+  </header>
+
+  <!-- ══════════════════════════════════════
+       MAIN LAYOUT  (left = form, right = results)
+  ══════════════════════════════════════ -->
+  <div class="container">
+
+    <!-- ── LEFT: INPUT FORM ── -->
+    <div class="panel-left">
+      <div class="card">
+        <div class="card-title">📍 Farm Details</div>
+
+        <!-- State -->
+        <div class="form-group">
+          <label>State / राज्य</label>
+          <div class="select-wrap">
+            <select id="state">
+              <option value="">Select State</option>
+              <option value="Punjab">Punjab</option>
+              <option value="Haryana">Haryana</option>
+              <option value="Maharashtra">Maharashtra</option>
+              <option value="UP">Uttar Pradesh</option>
+              <option value="MP">Madhya Pradesh</option>
+              <option value="Rajasthan">Rajasthan</option>
+              <option value="Bihar">Bihar</option>
+              <option value="Karnataka">Karnataka</option>
+              <option value="AP">Andhra Pradesh</option>
+              <option value="Gujarat">Gujarat</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Crop -->
+        <div class="form-group">
+          <label>Crop / फसल</label>
+          <div class="select-wrap">
+            <select id="crop">
+              <option value="">Select Crop</option>
+              <option value="Wheat">Wheat (गेहूं)</option>
+              <option value="Rice">Rice (धान)</option>
+              <option value="Tomato">Tomato (टमाटर)</option>
+              <option value="Onion">Onion (प्याज)</option>
+              <option value="Potato">Potato (आलू)</option>
+              <option value="Soybean">Soybean (सोयाबीन)</option>
+              <option value="Cotton">Cotton (कपास)</option>
+              <option value="Sugarcane">Sugarcane (गन्ना)</option>
+              <option value="Maize">Maize (मक्का)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Farm Size -->
+        <div class="form-group">
+          <label>Farm Size (acres) / खेत का क्षेत्र</label>
+          <div class="slider-row">
+            <input type="range" id="farmSize" min="0.5" max="20" step="0.5" value="3"
+              oninput="document.getElementById('farmSizeVal').textContent = this.value + ' ac'" />
+            <span class="slider-val" id="farmSizeVal">3 ac</span>
+          </div>
+        </div>
+
+        <!-- Soil Health -->
+        <div class="form-group">
+          <label>Soil Health / मिट्टी की स्थिति</label>
+          <div class="chips" id="soilChips">
+            <div class="chip active" data-val="Good">Good ✅</div>
+            <div class="chip" data-val="Average">Average ⚠️</div>
+            <div class="chip" data-val="Poor">Poor ❌</div>
+          </div>
+        </div>
+
+        <!-- Harvest Days -->
+        <div class="form-group">
+          <label>Expected Harvest (days from now)</label>
+          <div class="slider-row">
+            <input type="range" id="harvestDays" min="5" max="90" step="5" value="20"
+              oninput="document.getElementById('harvestVal').textContent = this.value + ' days'" />
+            <span class="slider-val" id="harvestVal">20 days</span>
+          </div>
+        </div>
+
+        <!-- Storage -->
+        <div class="form-group">
+          <label>Storage Available / भंडारण</label>
+          <div class="select-wrap">
+            <select id="storage">
+              <option value="None">No storage (field/roadside)</option>
+              <option value="Home">Home store (kaccha)</option>
+              <option value="Pucca">Pucca storage room</option>
+              <option value="ColdRoom">Cold room / Refrigeration</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Mandi Distance -->
+        <div class="form-group">
+          <label>Nearest Mandi Distance (km)</label>
+          <div class="slider-row">
+            <input type="range" id="mandiDist" min="5" max="200" step="5" value="30"
+              oninput="document.getElementById('mandiVal').textContent = this.value + ' km'" />
+            <span class="slider-val" id="mandiVal">30 km</span>
+          </div>
+        </div>
+
+        <!-- Weather -->
+        <div class="form-group">
+          <label>Current Weather Risk / मौसम</label>
+          <div class="chips" id="weatherChips">
+            <div class="chip active" data-val="Clear">☀️ Clear</div>
+            <div class="chip" data-val="Cloudy">⛅ Cloudy</div>
+            <div class="chip" data-val="Rain">🌧️ Rain</div>
+            <div class="chip" data-val="Heatwave">🔥 Heatwave</div>
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <button id="analyzeBtn" onclick="runAnalysis()">
+          🔍 Analyse My Farm
+        </button>
+      </div>
+    </div><!-- /panel-left -->
+
+    <!-- ── RIGHT: RESULTS ── -->
+    <div class="panel-right">
+
+      <!-- Loading spinner -->
+      <div id="loader">
+        <div class="spin"></div>
+        Analysing your farm data…
+      </div>
+
+      <!-- All result cards (hidden until analyse is clicked) -->
+      <div id="results">
+
+        <!-- Card 1: Overall Score -->
+        <div class="card">
+          <div class="card-title">📊 Overall Opportunity Score</div>
+          <div class="score-row">
+            <div class="score-ring" id="scoreRing">
+              <span id="scoreNum">--</span>
+              <sub>/100</sub>
+            </div>
+            <div>
+              <div id="scoreBadge"></div>
+              <p class="score-headline" id="scoreHeadline"></p>
+              <p class="score-subtext" id="scoreSubtext"></p>
+            </div>
+          </div>
+          <div class="reason-box">
+            <strong>🧠 Why this score?</strong>
+            <span id="scoreReason"></span>
+          </div>
+          <div class="hindi-note">
+            <div class="hn-label">📱 Farmer Summary (Hindi)</div>
+            <div id="hindiSummary"></div>
+          </div>
+        </div>
+
+        <!-- Card 2: Harvest Window -->
+        <div class="card sec-gap">
+          <div class="card-title">🌱 Optimal Harvest Window</div>
+          <div class="timeline" id="harvestTimeline"></div>
+          <div class="reason-box">
+            <strong>🧠 Why this window?</strong>
+            <span id="harvestReason"></span>
+          </div>
+        </div>
+
+        <!-- Card 3: Best Markets -->
+        <div class="card sec-gap">
+          <div class="card-title">🏪 Recommended Markets</div>
+          <table class="mkt-table">
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Market / मंडी</th>
+                <th>Avg Price</th>
+                <th>Distance</th>
+                <th>Best Time</th>
+              </tr>
+            </thead>
+            <tbody id="marketRows"></tbody>
+          </table>
+          <div class="reason-box" style="margin-top:12px">
+            <strong>🧠 Why these markets?</strong>
+            <span id="marketReason"></span>
+          </div>
+        </div>
+
+        <!-- Card 4: Price Trends -->
+        <div class="card sec-gap">
+          <div class="card-title">📈 Price Trend Indicators</div>
+          <div id="priceBars"></div>
+          <div class="reason-box" style="margin-top:10px">
+            <strong>🧠 Price Pattern</strong>
+            <span id="priceTrendReason"></span>
+          </div>
+        </div>
+
+        <!-- Card 5: Spoilage Risk -->
+        <div class="card sec-gap">
+          <div class="card-title">⚠️ Post-Harvest Spoilage Risk</div>
+          <div class="score-row">
+            <div class="score-ring" id="spoilRing">
+              <span id="spoilNum">--</span>
+              <sub>risk</sub>
+            </div>
+            <div>
+              <div id="spoilBadge"></div>
+              <p class="score-headline" id="spoilHeadline"></p>
+              <p class="score-subtext" id="spoilSubtext"></p>
+            </div>
+          </div>
+          <div class="reason-box">
+            <strong>🧠 Why this risk level?</strong>
+            <span id="spoilReason"></span>
+          </div>
+        </div>
+
+        <!-- Card 6: Preservation Actions -->
+        <div class="card sec-gap">
+          <div class="card-title">🛡️ Preservation Actions (Best to Least)</div>
+          <div id="preserveList"></div>
+        </div>
+
+      </div><!-- /results -->
+    </div><!-- /panel-right -->
+
+  </div><!-- /container -->
+
+  <!-- Our JS files (order matters!) -->
+  <script src="js/data.js"></script>
+  <script src="js/chips.js"></script>
+  <script src="js/engine.js"></script>
+  <script src="js/render.js"></script>
+  <script src="js/main.js"></script>
+
+</body>
+</html>
