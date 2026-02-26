@@ -1,0 +1,7 @@
+{
+  "name": "Remix: Kisan Market",
+  "description": "AI-driven Farm-to-Market Intelligence Platform for Indian farmers to optimize harvest timing and maximize profits.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
