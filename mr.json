@@ -1,0 +1,79 @@
+{
+  "appName": "किसान मार्केट गुरू",
+  "tagline": "शेतातून बाजारापर्यंत, योग्य वेळी",
+  "tabs": {
+    "home": "मुख्य",
+    "live": "थेट",
+    "trends": "कल",
+    "weather": "हवामान"
+  },
+  "home": {
+    "title": "पीक बुद्धिमत्ता",
+    "selectCrop": "पीक निवडा",
+    "selectState": "राज्य निवडा",
+    "selectDistrict": "जिल्हा निवडा",
+    "farmSize": "शेताचा आकार (एकर)",
+    "analyzeBtn": "विश्लेषण करा",
+    "harvestWindow": "काढणीचा कालावधी",
+    "bestMarkets": "सर्वोत्तम बाजार",
+    "spoilageRisk": "खराब होण्याचा धोका",
+    "preservation": "संरक्षण उपाय",
+    "why": "का?",
+    "readiness": "तयारी",
+    "distance": "अंतर",
+    "price": "किंमत",
+    "trend": "कल",
+    "action": "उपाय",
+    "cost": "खर्च",
+    "effectiveness": "परिणामकारकता",
+    "harvestDays": "दिवसांत काढणी",
+    "voicePlay": "ऐका",
+    "useGPS": "GPS वापरा"
+  },
+  "live": {
+    "title": "थेट मंडी भाव",
+    "updating": "अपडेट होत आहे...",
+    "lastUpdate": "शेवटचे अपडेट",
+    "filterCrop": "पीक फिल्टर",
+    "filterState": "राज्य फिल्टर",
+    "export": "CSV डाउनलोड",
+    "commodity": "वस्तू",
+    "livePrice": "थेट भाव",
+    "change": "बदल",
+    "high": "उच्च",
+    "low": "नीच",
+    "topMandi": "टॉप मंडी"
+  },
+  "trends": {
+    "title": "किंमत कल",
+    "selectCommodity": "वस्तू निवडा",
+    "from": "पासून",
+    "to": "पर्यंत",
+    "week1": "1 आठवडा",
+    "month1": "1 महिना",
+    "month3": "3 महिने",
+    "year1": "1 वर्ष",
+    "all": "सर्व"
+  },
+  "weather": {
+    "title": "7 दिवसांचे हवामान",
+    "date": "तारीख",
+    "temp": "तापमान",
+    "rain": "पाऊस",
+    "humidity": "आर्द्रता",
+    "wind": "वारा",
+    "condition": "स्थिती",
+    "farmingTip": "शेती सल्ला"
+  },
+  "crops": {
+    "Rice": "भात", "Wheat": "गहू", "Maize": "मका", "Jowar": "ज्वारी",
+    "Bajra": "बाजरी", "Gram": "हरभरा", "Tur": "तूर", "Moong": "मूग",
+    "Urad": "उडीद", "Lentil": "मसूर", "Onion": "कांदा", "Potato": "बटाटा",
+    "Tomato": "टोमॅटो", "Brinjal": "वांगी", "Cabbage": "कोबी",
+    "Cauliflower": "फुलकोबी", "Okra": "भेंडी", "Beans": "घेवडा",
+    "Peas": "वाटाणा", "Chilli": "मिरची", "Garlic": "लसूण", "Ginger": "आले",
+    "Turmeric": "हळद", "Cotton": "कापूस", "Sugarcane": "ऊस",
+    "Groundnut": "शेंगदाणे", "Soyabean": "सोयाबीन", "Sunflower": "सूर्यफूल",
+    "Mustard": "मोहरी", "Eggs": "अंडी", "Fish": "मासे"
+  }
+}

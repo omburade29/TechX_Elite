@@ -1,0 +1,79 @@
+{
+  "appName": "किसान मार्केट गुरु",
+  "tagline": "खेत से बाज़ार तक, सही समय पर",
+  "tabs": {
+    "home": "होम",
+    "live": "लाइव",
+    "trends": "ट्रेंड",
+    "weather": "मौसम"
+  },
+  "home": {
+    "title": "फसल बुद्धि",
+    "selectCrop": "फसल चुनें",
+    "selectState": "राज्य चुनें",
+    "selectDistrict": "जिला चुनें",
+    "farmSize": "खेत का आकार (एकड़)",
+    "analyzeBtn": "विश्लेषण करें",
+    "harvestWindow": "कटाई का समय",
+    "bestMarkets": "सबसे अच्छे बाज़ार",
+    "spoilageRisk": "खराब होने का खतरा",
+    "preservation": "संरक्षण उपाय",
+    "why": "क्यों?",
+    "readiness": "तैयारी",
+    "distance": "दूरी",
+    "price": "कीमत",
+    "trend": "ट्रेंड",
+    "action": "उपाय",
+    "cost": "लागत",
+    "effectiveness": "प्रभावशीलता",
+    "harvestDays": "दिनों में कटाई",
+    "voicePlay": "सुनें",
+    "useGPS": "GPS से पता लें"
+  },
+  "live": {
+    "title": "लाइव मंडी भाव",
+    "updating": "अपडेट हो रहा है...",
+    "lastUpdate": "आखिरी अपडेट",
+    "filterCrop": "फसल फिल्टर",
+    "filterState": "राज्य फिल्टर",
+    "export": "CSV डाउनलोड",
+    "commodity": "वस्तु",
+    "livePrice": "लाइव भाव",
+    "change": "बदलाव",
+    "high": "उच्च",
+    "low": "न्यून",
+    "topMandi": "टॉप मंडी"
+  },
+  "trends": {
+    "title": "कीमत के ट्रेंड",
+    "selectCommodity": "वस्तु चुनें",
+    "from": "से",
+    "to": "तक",
+    "week1": "1 सप्ताह",
+    "month1": "1 महीना",
+    "month3": "3 महीने",
+    "year1": "1 साल",
+    "all": "सभी"
+  },
+  "weather": {
+    "title": "7 दिन का मौसम",
+    "date": "तारीख",
+    "temp": "तापमान",
+    "rain": "बारिश",
+    "humidity": "नमी",
+    "wind": "हवा",
+    "condition": "स्थिति",
+    "farmingTip": "खेती सुझाव"
+  },
+  "crops": {
+    "Rice": "चावल", "Wheat": "गेहूं", "Maize": "मक्का", "Jowar": "ज्वार",
+    "Bajra": "बाजरा", "Gram": "चना", "Tur": "तुअर", "Moong": "मूंग",
+    "Urad": "उड़द", "Lentil": "मसूर", "Onion": "प्याज", "Potato": "आलू",
+    "Tomato": "टमाटर", "Brinjal": "बैंगन", "Cabbage": "पत्तागोभी",
+    "Cauliflower": "फूलगोभी", "Okra": "भिंडी", "Beans": "फलियां",
+    "Peas": "मटर", "Chilli": "मिर्च", "Garlic": "लहसुन", "Ginger": "अदरक",
+    "Turmeric": "हल्दी", "Cotton": "कपास", "Sugarcane": "गन्ना",
+    "Groundnut": "मूंगफली", "Soyabean": "सोयाबीन", "Sunflower": "सूरजमुखी",
+    "Mustard": "सरसों", "Eggs": "अंडे", "Fish": "मछली"
+  }
+}

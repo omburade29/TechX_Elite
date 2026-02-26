@@ -1,0 +1,79 @@
+{
+  "appName": "Kisan Market Guru",
+  "tagline": "Farm to Market Intelligence Platform",
+  "tabs": {
+    "home": "Home",
+    "live": "Live",
+    "trends": "Trends",
+    "weather": "Weather"
+  },
+  "home": {
+    "title": "Farm Intelligence",
+    "selectCrop": "Select Crop",
+    "selectState": "Select State",
+    "selectDistrict": "Select District",
+    "farmSize": "Farm Size (Acres)",
+    "analyzeBtn": "Analyze Now",
+    "harvestWindow": "Harvest Window",
+    "bestMarkets": "Best Markets",
+    "spoilageRisk": "Spoilage Risk",
+    "preservation": "Preservation Actions",
+    "why": "Why?",
+    "readiness": "Readiness",
+    "distance": "Distance",
+    "price": "Price",
+    "trend": "Trend",
+    "action": "Action",
+    "cost": "Cost",
+    "effectiveness": "Effectiveness",
+    "harvestDays": "days to harvest",
+    "voicePlay": "Play Audio",
+    "useGPS": "Use GPS"
+  },
+  "live": {
+    "title": "Live Mandi Prices",
+    "updating": "Updating...",
+    "lastUpdate": "Last update",
+    "filterCrop": "Filter by Crop",
+    "filterState": "Filter by State",
+    "export": "Export CSV",
+    "commodity": "Commodity",
+    "livePrice": "Live ₹/Qtl",
+    "change": "Change",
+    "high": "High",
+    "low": "Low",
+    "topMandi": "Top Mandi"
+  },
+  "trends": {
+    "title": "Price Trends",
+    "selectCommodity": "Select Commodity",
+    "from": "From",
+    "to": "To",
+    "week1": "1W",
+    "month1": "1M",
+    "month3": "3M",
+    "year1": "1Y",
+    "all": "All"
+  },
+  "weather": {
+    "title": "7-Day Forecast",
+    "date": "Date",
+    "temp": "Temp",
+    "rain": "Rain",
+    "humidity": "Humidity",
+    "wind": "Wind",
+    "condition": "Condition",
+    "farmingTip": "Farming Tip"
+  },
+  "crops": {
+    "Rice": "Rice", "Wheat": "Wheat", "Maize": "Maize", "Jowar": "Jowar",
+    "Bajra": "Bajra", "Gram": "Gram", "Tur": "Tur/Arhar", "Moong": "Moong",
+    "Urad": "Urad", "Lentil": "Lentil", "Onion": "Onion", "Potato": "Potato",
+    "Tomato": "Tomato", "Brinjal": "Brinjal", "Cabbage": "Cabbage",
+    "Cauliflower": "Cauliflower", "Okra": "Okra/Bhindi", "Beans": "Beans",
+    "Peas": "Peas", "Chilli": "Chilli", "Garlic": "Garlic", "Ginger": "Ginger",
+    "Turmeric": "Turmeric", "Cotton": "Cotton", "Sugarcane": "Sugarcane",
+    "Groundnut": "Groundnut", "Soyabean": "Soyabean", "Sunflower": "Sunflower",
+    "Mustard": "Mustard", "Eggs": "Eggs", "Fish": "Fish"
+  }
+}
