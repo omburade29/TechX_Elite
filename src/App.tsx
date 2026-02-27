@@ -30,7 +30,7 @@ export default function App() {
   const [insights, setInsights] = useState<any>(null);
   const [marketWatch, setMarketWatch] = useState<any[]>([]);
   const [districtInfo, setDistrictInfo] = useState<{ villages: string[], famousCrops: string[] }>({ villages: [], famousCrops: [] });
-  const [mandiSort, setMandiSort] = useState<'nearest' | 'price'>('price');
+  const [mandiSort, setMandiSort] = useState<'best' | 'nearest' | 'price'>('best');
   const [selectedWeatherDay, setSelectedWeatherDay] = useState<number>(0);
 
   const t = TRANSLATIONS[lang];
@@ -401,21 +401,27 @@ export default function App() {
               </section>
 
               {/* Market Recommendations */}
-              <section className="bg-white rounded-3xl p-6 shadow-lg border border-stone-100 space-y-4">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-xl font-black text-emerald-900 flex items-center gap-2">
-                    <ShoppingCart className="text-orange-500" size={24} /> {t.bestMarkets}
+              <section className="bg-white rounded-3xl p-6 shadow-lg border border-stone-100 space-y-6">
+                <div className="flex items-start justify-between">
+                  <h3 className="text-xl font-black text-teal-900 flex items-start gap-2 max-w-[60%] leading-tight">
+                    <ShoppingCart className="text-orange-500 mt-1 flex-shrink-0" size={20} /> Top 5 Mandis for Your Crop
                   </h3>
                   <div className="flex gap-1 bg-stone-100 p-1 rounded-xl">
                     <button 
+                      onClick={() => setMandiSort('best')}
+                      className={`px-3 py-1 rounded-lg text-[10px] font-bold uppercase transition-all ${mandiSort === 'best' ? 'bg-white text-teal-600 shadow-sm' : 'text-stone-400'}`}
+                    >
+                      Best
+                    </button>
+                    <button 
                       onClick={() => setMandiSort('price')}
-                      className={`px-3 py-1 rounded-lg text-[10px] font-bold uppercase transition-all ${mandiSort === 'price' ? 'bg-white text-emerald-600 shadow-sm' : 'text-stone-400'}`}
+                      className={`px-3 py-1 rounded-lg text-[10px] font-bold uppercase transition-all ${mandiSort === 'price' ? 'bg-white text-teal-600 shadow-sm' : 'text-stone-400'}`}
                     >
                       Price
                     </button>
                     <button 
                       onClick={() => setMandiSort('nearest')}
-                      className={`px-3 py-1 rounded-lg text-[10px] font-bold uppercase transition-all ${mandiSort === 'nearest' ? 'bg-white text-emerald-600 shadow-sm' : 'text-stone-400'}`}
+                      className={`px-3 py-1 rounded-lg text-[10px] font-bold uppercase transition-all ${mandiSort === 'nearest' ? 'bg-white text-teal-600 shadow-sm' : 'text-stone-400'}`}
                     >
                       Nearest
                     </button>
@@ -423,25 +429,42 @@ export default function App() {
                 </div>
                 <div className="space-y-3">
                   {[...insights.marketRecommendations]
-                    .sort((a, b) => mandiSort === 'price' ? b.price - a.price : a.distance - b.distance)
+                    .sort((a, b) => {
+                      if (mandiSort === 'price') return b.price - a.price;
+                      if (mandiSort === 'nearest') return a.distance - b.distance;
+                      // Best: Highest price and lowest distance
+                      // We can use a simple score: price / distance
+                      const scoreA = a.price / (a.distance || 1);
+                      const scoreB = b.price / (b.distance || 1);
+                      return scoreB - scoreA;
+                    })
+                    .slice(0, 5)
                     .map((m: MandiPrice, idx: number) => (
                     <div 
                       key={idx} 
-                      className={`p-4 rounded-2xl border-2 transition-all ${idx === 0 ? 'border-orange-200 bg-orange-50' : 'border-stone-50 bg-stone-50'}`}
+                      className={`p-4 rounded-2xl border transition-all ${idx === 0 ? 'border-orange-200 bg-orange-50/50' : 'border-stone-50 bg-stone-50'}`}
                     >
-                      <div className="flex justify-between items-start mb-2">
-                        <div>
-                          <span className="text-2xl mr-2">{idx === 0 ? '🥇' : idx === 1 ? '🥈' : '📍'}</span>
-                          <span className="text-xl font-black text-stone-800">{m.mandi}</span>
+                      <div className="flex justify-between items-start mb-4">
+                        <div className="flex items-center gap-2">
+                          {idx === 0 ? (
+                            <div className="w-6 h-6 flex items-center justify-center text-xl">🥇</div>
+                          ) : idx === 1 ? (
+                            <div className="w-6 h-6 flex items-center justify-center text-xl">🥈</div>
+                          ) : (
+                            <div className="w-6 h-6 flex items-center justify-center">
+                              <MapPin size={18} className="text-pink-500 fill-pink-500" />
+                            </div>
+                          )}
+                          <span className="text-lg font-black text-stone-800">{m.mandi}</span>
                         </div>
                         <div className="text-right">
-                          <div className="text-2xl font-black text-emerald-700">₹{m.price}</div>
-                          <div className="text-xs font-bold text-stone-400 uppercase tracking-tighter">per quintal</div>
+                          <div className="text-2xl font-black text-teal-600">₹{m.price}</div>
+                          <div className="text-[10px] font-bold text-stone-400 uppercase tracking-tighter">per quintal</div>
                         </div>
                       </div>
-                      <div className="flex justify-between items-center pt-2 border-t border-stone-200/50">
-                        <div className="text-sm font-bold text-stone-500">{m.distance} km {t.distance}</div>
-                        <div className="text-lg font-black text-orange-600">+{t.profit}: ₹{m.profit.toLocaleString()}</div>
+                      <div className="flex justify-between items-center">
+                        <div className="text-xs font-bold text-stone-500">{m.distance} km Distance</div>
+                        <div className="text-sm font-black text-orange-600">+Total Profit: ₹{m.profit.toLocaleString()}</div>
                       </div>
                     </div>
                   ))}

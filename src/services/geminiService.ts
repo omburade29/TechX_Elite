@@ -80,9 +80,10 @@ export async function getFarmInsights(
     6. marketWatch: Array of 4 objects { name: string, price: number, trend: string, mandi: string }
     7. priceAccuracy: { source: string, confidence: number (0-100), lastUpdated: string }
 
-    CRITICAL: Use the data from https://agmarknet.ceda.ashoka.edu.in/ and Google Search to find the LATEST LIVE market prices (Mandi Bhav) for February 2026 in India. 
+    CRITICAL: Use the data from https://www.msamb.com/ApmcDetail/APMCPriceInformation#CommodityDistrictGird and Google Search to find the LATEST LIVE market prices (Mandi Bhav) for the crop "${crop}". 
     Ensure prices are highly accurate and reflect current market conditions.
-    The "priceAccuracy" field must state the source (e.g., "Agmarknet Live", "Google Search") and your confidence in the data.
+    For the marketRecommendations, sort the top 5 mandis according to lowest distances and highest prices (best combination of low distance and high price).
+    The "priceAccuracy" field must state the source (e.g., "MSAMB Live", "Google Search") and your confidence in the data.
     The reason should mention specific weather events and market news found via search.
     The weatherForecast should be specific to ${location.district}, ${location.state}.
     For each day in weatherForecast, provide highly actionable and specific agricultural advice for the crop "${crop}". 
